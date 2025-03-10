@@ -82,7 +82,7 @@ CREATE TABLE starships (
     consumables TEXT,
     hyperdrive_rating TEXT,
     MGLT TEXT,
-    class TEXT,
+    starship_class TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
     "url" TEXT
