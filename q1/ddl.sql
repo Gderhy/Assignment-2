@@ -8,12 +8,12 @@ CREATE TABLE films (
     release_date DATE,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT
+    "url" TEXT
 );
 
 CREATE TABLE planets (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     rotation_period TEXT,
     orbital_period TEXT,
     diameter TEXT,
@@ -21,15 +21,15 @@ CREATE TABLE planets (
     gravity TEXT,
     terrain TEXT,
     surface_water TEXT,
-    population TEXT,
+    "population" TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT
+    "url" TEXT
 );
 
 CREATE TABLE people (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     height TEXT,
     mass TEXT,
     hair_color TEXT,
@@ -40,7 +40,7 @@ CREATE TABLE people (
     homeworld_id INT,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT,
+    "url" TEXT,
     FOREIGN KEY (homeworld_id) REFERENCES planets (id) ON DELETE SET NULL
 );
 
@@ -70,11 +70,11 @@ CREATE TABLE planet_films (
 
 CREATE TABLE starships (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     model TEXT,
     manufacturer TEXT,
     cost_in_credits TEXT,
-    length TEXT,
+    "length" TEXT,
     max_atmosphering_speed TEXT,
     crew TEXT,
     passengers TEXT,
@@ -85,7 +85,7 @@ CREATE TABLE starships (
     class TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT
+    "url" TEXT
 );
 
 CREATE TABLE pilots (
@@ -106,11 +106,11 @@ CREATE TABLE film_starship (
 
 CREATE TABLE vehicles (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     model TEXT,
     manufacturer TEXT,
     cost_in_credits TEXT,
-    length TEXT,
+    "length" TEXT,
     max_atmosphering_speed TEXT,
     crew TEXT,
     passengers TEXT,
@@ -119,7 +119,7 @@ CREATE TABLE vehicles (
     class TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT
+    "url" TEXT
 );
 
 CREATE TABLE vehicle_pilots (
@@ -140,7 +140,7 @@ CREATE TABLE film_vehicle (
 
 CREATE TABLE species (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     classification TEXT,
     designation TEXT,
     average_height INT,
@@ -149,10 +149,10 @@ CREATE TABLE species (
     eye_colors TEXT,
     average_lifespan INT,
     homeworld_id INT,
-    language TEXT,
+    "language" TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
-    url TEXT,
+    "url" TEXT,
     FOREIGN KEY (homeworld_id) REFERENCES planets (id) ON DELETE SET NULL
 );
 
