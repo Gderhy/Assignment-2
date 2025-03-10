@@ -116,7 +116,7 @@ CREATE TABLE vehicles (
     passengers TEXT,
     cargo_capacity TEXT,
     consumables TEXT,
-    class TEXT,
+    vehicle_class TEXT,
     created TIMESTAMP,
     edited TIMESTAMP,
     "url" TEXT
