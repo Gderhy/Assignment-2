@@ -1,30 +1,25 @@
-// First use connectDB() then getPool() to get the pool object
-// Use disconnectDB() to disconnect from the database
-
+// Use getPool() to get the pool object
 
 import pkg from "pg";
 const { Pool } = pkg;
 
-let pool = null; 
+let pool = null;
 
-const initPool = () => {
+const initPool = async () => {
   if (!pool) {
-    pool = new Pool({
-      user: "postgres",
-      host: "localhost",
-      database: "mydatabase",
-      password: "yourpassword",
-      port: 5432,
-    });
-  }
-};
-
-export const connectDB = async () => {
-  try {
-    initPool(); 
-    console.log("Connected to PostgreSQL!");
-  } catch (err) {
-    console.error("Connection error", err.stack);
+    try {
+      pool = new Pool({
+        user: "postgres",
+        host: "localhost",
+        database: "soen363_a2",
+        password: "2002",
+        port: 5432,
+      });
+    } catch (err) {
+      console.error("Connection error", err.stack);
+    }
+  } else {
+    console.log("Pool already exists");
   }
 };
 
@@ -40,9 +35,8 @@ export const disconnectDB = async () => {
   }
 };
 
-export const getPool = () => {
-  initPool(); 
+export const getPool = async () => {
+  if (!pool) await initPool();
 
   return pool;
 };
-
