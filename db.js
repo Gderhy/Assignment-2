@@ -1,12 +1,38 @@
 // Use getPool() to get the pool object
-
 import pkg from "pg";
-const { Pool } = pkg;
+const { Pool, Client } = pkg;
 
+const DB_NAME = "soen363_a2";
 let pool = null;
+
+const initDatabase = async () => {
+  const client = new Client({
+    user: "postgres",
+    host: "localhost",
+    password: "2002",
+    port: 5432,
+  });
+
+  try {
+    await client.connect();
+    const res = await client.query(
+      `SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'`
+    );
+    if (res.rowCount === 0) {
+      console.log(`Database "${DB_NAME}" not found. Creating...`);
+      await client.query(`CREATE DATABASE ${DB_NAME}`);
+      console.log(`Database "${DB_NAME}" created!`);
+    }
+  } catch (err) {
+    console.error("Database creation error:", err);
+  } finally {
+    await client.end();
+  }
+};
 
 const initPool = async () => {
   if (!pool) {
+    await initDatabase();
     try {
       pool = new Pool({
         user: "postgres",
@@ -40,3 +66,5 @@ export const getPool = async () => {
 
   return pool;
 };
+
+await getPool();
