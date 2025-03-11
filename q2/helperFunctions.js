@@ -211,7 +211,7 @@ const insertVehicles = async (pool, vehiclesData) => {
   }
 };
 
-const saveRelations = async (relations) => {
+const saveRelationsJson = async (relations) => {
   console.log("Saving relations to file");
   try {
     const filename = "relations.json";
@@ -223,6 +223,7 @@ const saveRelations = async (relations) => {
   }
 };
 
+
 export {
   getStarWarsUrls,
   getData,
@@ -232,5 +233,5 @@ export {
   insertPeople,
   insertStarships,
   insertVehicles,
-  saveRelations,
+  saveRelationsJson,
 };
