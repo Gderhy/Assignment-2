@@ -58,15 +58,15 @@ const insertFilms = async (pool, filmsData) => {
   }
 
   const columns = [
+    "url",
     "title",
     "episode_id",
     "opening_crawl",
     "director",
     "producer",
     "release_date",
-    "url",
   ];
-  const query = pgp.helpers.insert(filmsData, columns, "films") + " RETURNING id, url;";
+  const query = pgp.helpers.insert(filmsData, columns, "films") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);
@@ -98,7 +98,7 @@ const insertPlanets = async (pool, planetsData) => {
     "population",
     "url",
   ];
-  const query = pgp.helpers.insert(planetsData, columns, "planets") + " RETURNING id, url;";
+  const query = pgp.helpers.insert(planetsData, columns, "planets") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);
@@ -129,7 +129,7 @@ const insertPeople = async (pool, peopleData) => {
     "gender",
     "url",
   ];
-  const query = pgp.helpers.insert(peopleData, columns, "people") + " RETURNING id, url;";
+  const query = pgp.helpers.insert(peopleData, columns, "people") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);
@@ -137,6 +137,90 @@ const insertPeople = async (pool, peopleData) => {
     return queryResult.rows;
   } catch (err) {
     console.error("Error inserting people:", err.stack);
+    return [];
+  }
+};
+
+const insertPlanetPeople = async (pool, planetsData) => {
+  console.log("Inserting planet_people...");
+
+  const relations = [];
+  planetsData.forEach((planet) => {
+    planet.residents.forEach((residentUrl) => {
+      relations.push({ planet_url: planet.url, people_url: residentUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No planet-people relations to insert.");
+    return [];
+  }
+
+  const columns = ["planet_url", "people_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "planet_people") + " RETURNING planet_url, people_url;";
+
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} planet-people relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting planet-people relations:", err.stack);
+    return [];
+  }
+};
+
+const insertFilmPeople = async (pool, filmsData) => {
+  console.log("Inserting film_people...");
+  const relations = [];
+  filmsData.forEach((film) => {
+    film.characters.forEach((characterUrl) => {
+      relations.push({ film_url: film.url, people_url: characterUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No film-people relations to insert.");
+    return [];
+  }
+
+  const columns = ["film_url", "people_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "film_people") + " RETURNING film_url, people_url;";
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} film-people relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting film-people relations:", err.stack);
+    return [];
+  }
+};
+
+const insertPlanetFilms = async (pool, planetsData) => {
+  console.log("Inserting planet_films...");
+  const relations = [];
+
+  planetsData.forEach((planet) => {
+    planet.films.forEach((filmUrl) => {
+      relations.push({ planet_url: planet.url, film_url: filmUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No planet-film relations to insert.");
+    return [];
+  }
+
+  const columns = ["planet_url", "film_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "planet_films") + " RETURNING planet_url, film_url;";
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} planet-film relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting planet-film relations:", err.stack);
     return [];
   }
 };
@@ -165,7 +249,7 @@ const insertStarships = async (pool, starshipsData) => {
     "starship_class",
     "url",
   ];
-  const query = pgp.helpers.insert(starshipsData, columns, "starships") + " RETURNING id, url;";
+  const query = pgp.helpers.insert(starshipsData, columns, "starships") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);
@@ -173,6 +257,64 @@ const insertStarships = async (pool, starshipsData) => {
     return queryResult.rows;
   } catch (err) {
     console.error("Error inserting starships:", err.stack);
+    return [];
+  }
+};
+
+const insertPilots = async (pool, starshipsData) => {
+  console.log("Inserting pilots...");
+  const relations = [];
+
+  starshipsData.forEach((starship) => {
+    starship.pilots.forEach((pilotUrl) => {
+      relations.push({ starship_url: starship.url, people_url: pilotUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No pilot relations to insert.");
+    return [];
+  }
+
+  const columns = ["starship_url", "people_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "pilots") + " RETURNING starship_url, people_url;";
+
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} pilot relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting pilot relations:", err.stack);
+    return [];
+  }
+};
+
+const insertFilmStarships = async (pool, filmsData) => {
+  console.log("Inserting film_starship...");
+  const relations = [];
+
+  filmsData.forEach((film) => {
+    film.starships.forEach((starshipUrl) => {
+      relations.push({ film_url: film.url, starship_url: starshipUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No film-starship relations to insert.");
+    return [];
+  }
+
+  const columns = ["film_url", "starship_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "film_starship") + " RETURNING film_url, starship_url;";
+
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} film_starship relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting film-starship relations:", err.stack);
     return [];
   }
 };
@@ -199,7 +341,7 @@ const insertVehicles = async (pool, vehiclesData) => {
     "vehicle_class",
     "url",
   ];
-  const query = pgp.helpers.insert(vehiclesData, columns, "vehicles") + " RETURNING id, url;";
+  const query = pgp.helpers.insert(vehiclesData, columns, "vehicles") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);
@@ -211,15 +353,124 @@ const insertVehicles = async (pool, vehiclesData) => {
   }
 };
 
-const saveRelationsJson = async (relations) => {
-  console.log("Saving relations to file");
+const insertVehiclePilot = async (pool, vehiclesData) => {
+  console.log("Inserting vehicle_pilots...");
+  const relations = [];
+
+  vehiclesData.forEach((vehicle) => {
+    vehicle.pilots.forEach((pilotUrl) => {
+      relations.push({ vehicle_url: vehicle.url, people_url: pilotUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No vehicle-pilot relations to insert.");
+    return [];
+  }
+
+  const columns = ["vehicle_url", "people_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "vehicle_pilots") +
+    " RETURNING vehicle_url, people_url;";
+
   try {
-    const filename = "relations.json";
-    const data = JSON.stringify(relations, null, 2);
-    await fs.promises.writeFile(filename, data);
-    console.log(`Relations saved to ${filename}`);
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} vehicle-pilot relations.`);
+    return queryResult.rows;
   } catch (err) {
-    console.error("Error saving relations", err.stack);
+    console.error("Error inserting vehicle-pilot relations:", err.stack);
+    return [];
+  }
+};
+
+const insertFilmVehicle = async (pool, filmsData) => {
+  console.log("Inserting film_vehicle...");
+  const relations = [];
+
+  filmsData.forEach((film) => {
+    film.vehicles.forEach((vehicleUrl) => {
+      relations.push({ film_url: film.url, vehicle_url: vehicleUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No film-vehicle relations to insert.");
+    return [];
+  }
+
+  const columns = ["film_url", "vehicle_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "film_vehicle") + " RETURNING film_url, vehicle_url;";
+
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} film-vehicle relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting film-vehicle relations:", err.stack);
+    return [];
+  }
+};
+
+const insertSpecies = async (pool, speciesData) => {
+  console.log("Inserting species...");
+
+  if (speciesData.length === 0) {
+    console.log("No species to insert.");
+    return [];
+  }
+
+  const columns = [
+    "name",
+    "classification",
+    "designation",
+    "average_height",
+    "skin_colors",
+    "hair_colors",
+    "eye_colors",
+    "average_lifespan",
+    "language",
+    "url",
+  ];
+
+  const query = pgp.helpers.insert(speciesData, columns, "species") + " RETURNING url;";
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} species.`);
+
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting species:", err.stack);
+    return [];
+  }
+};
+
+const insertFilmSpecies = async (pool, filmsData) => {
+  console.log("Inserting film_species...");
+  const relations = [];
+
+  filmsData.forEach((film) => {
+    film.species.forEach((speciesUrl) => {
+      relations.push({ film_url: film.url, species_url: speciesUrl });
+    });
+  });
+
+  if (relations.length === 0) {
+    console.log("No film-species relations to insert.");
+    return [];
+  }
+
+  const columns = ["film_url", "species_url"];
+  const query =
+    pgp.helpers.insert(relations, columns, "film_species") + " RETURNING film_url, species_url;";
+
+  try {
+    const queryResult = await pool.query(query);
+    console.log(`Inserted ${queryResult.rowCount} film-species relations.`);
+    return queryResult.rows;
+  } catch (err) {
+    console.error("Error inserting film-species relations:", err.stack);
+    return [];
   }
 };
 
@@ -233,5 +484,13 @@ export {
   insertPeople,
   insertStarships,
   insertVehicles,
-  saveRelationsJson,
+  insertPlanetPeople,
+  insertFilmPeople,
+  insertPlanetFilms,
+  insertPilots,
+  insertFilmStarships,
+  insertVehiclePilot,
+  insertFilmVehicle,
+  insertSpecies,
+  insertFilmSpecies,
 };
