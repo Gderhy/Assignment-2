@@ -6,9 +6,7 @@ CREATE TABLE films (
     director TEXT,
     producer TEXT,
     release_date DATE,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT
+    "url" TEXT UNIQUE
 );
 
 CREATE TABLE planets (
@@ -22,9 +20,7 @@ CREATE TABLE planets (
     terrain TEXT,
     surface_water TEXT,
     "population" TEXT,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT
+    "url" TEXT UNIQUE
 );
 
 CREATE TABLE people (
@@ -38,9 +34,7 @@ CREATE TABLE people (
     birth_year TEXT,
     gender TEXT,
     homeworld_id INT,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT,
+    "url" TEXT UNIQUE,
     FOREIGN KEY (homeworld_id) REFERENCES planets (id) ON DELETE SET NULL
 );
 
@@ -81,11 +75,9 @@ CREATE TABLE starships (
     cargo_capacity TEXT,
     consumables TEXT,
     hyperdrive_rating TEXT,
-    MGLT TEXT,
+    "MGLT" TEXT,
     starship_class TEXT,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT
+    "url" TEXT UNIQUE
 );
 
 CREATE TABLE pilots (
@@ -117,9 +109,7 @@ CREATE TABLE vehicles (
     cargo_capacity TEXT,
     consumables TEXT,
     vehicle_class TEXT,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT
+    "url" TEXT UNIQUE
 );
 
 CREATE TABLE vehicle_pilots (
@@ -150,9 +140,7 @@ CREATE TABLE species (
     average_lifespan INT,
     homeworld_id INT,
     "language" TEXT,
-    created TIMESTAMP,
-    edited TIMESTAMP,
-    "url" TEXT,
+    "url" TEXT UNIQUE,
     FOREIGN KEY (homeworld_id) REFERENCES planets (id) ON DELETE SET NULL
 );
 
