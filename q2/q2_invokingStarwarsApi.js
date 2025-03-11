@@ -31,8 +31,10 @@ const fillTables = async () => {
     const vehiclesData = await HelperFunctions.getDataWithPagination(urls.vehicles);
     relations.vehicles = await HelperFunctions.insertVehicles(pool, vehiclesData);
 
-    // // Save relations to file
-    await HelperFunctions.saveRelationsJSON(relations);
+    // Save relations to file
+    await HelperFunctions.saveRelationsJson(relations);
+
+
 
     // Close the pool
     await disconnectDB();
