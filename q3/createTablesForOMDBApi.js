@@ -7,7 +7,7 @@ const delete_tables = async (pool) => {
   try {
     await pool.query(`DROP TABLE IF EXISTS
         film_ratings,
-        film_imdbID,
+        film_imdb,
         CASCADE;
         `);
     console.log(`Tables deleted`);

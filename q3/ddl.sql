@@ -8,7 +8,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  film_imdbID (
+  film_imdb (
     "url" TEXT,
     imdbID TEXT,
     imdbRating TEXT,
