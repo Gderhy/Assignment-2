@@ -74,10 +74,9 @@ const storeRatingsInDb = async (pool, data) => {
 const storeImdbInDb = async (pool, data) => {
   for (const film of data) {
     try {
-      await pool.query(`INSERT INTO film_imdb (url, imdbID, imdbRating) VALUES ($1, $2, $3)`, [
+      await pool.query(`INSERT INTO film_imdb (url, imdbID) VALUES ($1, $2)`, [
         film.url,
         film.omdb.imdbID,
-        film.omdb.imdbRating,
       ]);
       console.log("IMDb data stored in the database");
     } catch (error) {

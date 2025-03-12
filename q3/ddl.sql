@@ -11,7 +11,6 @@ CREATE TABLE
   film_imdb (
     "url" TEXT,
     imdbID TEXT,
-    imdbRating TEXT,
     PRIMARY KEY ("url"),
     FOREIGN KEY ("url") REFERENCES films ("url") ON DELETE CASCADE
   );
