@@ -29,7 +29,7 @@ const deleteTables = async (pool) => {
     console.log("All tables deleted");
 
   } catch (err) {
-    console.error("❌ Error during table deletion:", err.stack);
+    console.error("Error during table deletion:", err.stack);
   }
 };
 
