@@ -33,9 +33,8 @@ const deleteTables = async (pool) => {
   }
 };
 
-const createTables = async () => {
+const createTables = async (pool) => {
   try {
-    const pool = await getPool();
 
     // Read the DDL file
 
