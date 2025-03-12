@@ -55,6 +55,19 @@ const storeRatingsInDb = async (pool, data) => {
         }
       }
     }
+
+    if(film.omdb?.imdbRating) {
+      try {
+        await pool.query(`INSERT INTO film_ratings (url, source, value) VALUES ($1, $2, $3)`, [
+          film.url,
+          "imdb",
+          film.omdb.imdbRating,
+        ]);
+        console.log("IMDb rating data stored in the database");
+      } catch (error) {
+        console.error("Error storing IMDb rating:", error);
+      }
+    }
   }
 };
 
