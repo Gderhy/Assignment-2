@@ -9,6 +9,7 @@ const initDatabase = async () => {
   const client = new Client({
     user: "postgres",
     host: "localhost",
+    database: DB_NAME,
     password: "2002",
     port: 5432,
   });
