@@ -4,7 +4,20 @@ import format from "pg-format";
 import { getPool, disconnectDB } from "../db.js";
 
 const csvFilePath = "./q4/star_wars_movies.csv";
-
+// fs.createReadStream(csvFilePath)
+//   .pipe(csv())
+//   .on("data", (row) => {
+//     if (row.title && row.title.length > 255) {
+//       console.error(`Title too long: ${row.title}`);
+//     }
+//     if (row.keywords) {
+//       row.keywords.split(", ").forEach((keyword) => {
+//         if (keyword.length > 255) {
+//           console.error(`Keyword too long: ${keyword}`);
+//         }
+//       });
+//     }
+//   });
 const insertStarWarsData = async () => {
   const pool = await getPool();
   const movies = [];

@@ -2,7 +2,7 @@
 CREATE TABLE
   star_wars_popularity (
     movie_id INT PRIMARY KEY,
-    title VARCHAR(255),
+    title VARCHAR(500),
     popularity FLOAT
   );
 
