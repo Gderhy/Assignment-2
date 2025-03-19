@@ -133,3 +133,14 @@ FROM
   pilots p
   JOIN normalized_starships ns ON p.starship_url = ns.url
   JOIN normalized_people npe ON p.people_url = npe.url;
+
+-- Migrate film_starship to normalized_films_startships
+INSERT INTO
+  normalized_films_startships (film_id, starship_id)
+SELECT
+  sfd.film_id,
+  ns.starship_id
+  FROM
+    film_starship fs
+    JOIN swapi_films_details sfd ON fs.film_url = sfd.url
+    JOIN normalized_starships ns ON fs.starship_url = ns.url;

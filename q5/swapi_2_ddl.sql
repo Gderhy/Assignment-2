@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS normalized_films_startships;
 DROP TABLE IF EXISTS normalized_pilots;
 DROP TABLE IF EXISTS normalized_starships;
 DROP TABLE IF EXISTS normalized_planet_films;
@@ -85,4 +86,10 @@ CREATE TABLE normalized_pilots(
   starship_id INT REFERENCES normalized_starships (starship_id) ON DELETE CASCADE,
   person_id INT REFERENCES normalized_people (person_id) ON DELETE CASCADE,
   PRIMARY KEY (starship_id, person_id)
+);
+
+CREATE TABLE normalized_films_startships(
+  film_id INT REFERENCES normalized_films (film_id) ON DELETE CASCADE,
+  starship_id INT REFERENCES normalized_starships (starship_id) ON DELETE CASCADE,
+  PRIMARY KEY (film_id, starship_id)
 );
