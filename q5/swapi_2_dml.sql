@@ -65,7 +65,6 @@ FROM
   JOIN normalized_planets np ON pp.planet_url = np.url
   JOIN normalized_people npe ON pp.people_url = npe.url;
 
-
 -- Migrate film_people to normalized_films_people
 INSERT INTO
   normalized_films_people (film_id, person_id)
@@ -87,3 +86,39 @@ FROM
   planet_films pf
   JOIN normalized_planets npf ON pf.planet_url = npf.url
   JOIN swapi_films_details sfd ON pf.film_url = sfd.url;
+
+-- Migrate starships to normalized_starships
+INSERT INTO
+  normalized_starships (
+    "url",
+    "name",
+    model,
+    manufacturer,
+    cost_in_credits,
+    "length",
+    max_atmosphering_speed,
+    crew,
+    passengers,
+    cargo_capacity,
+    consumables,
+    hyperdrive_rating,
+    "MGLT",
+    starship_class
+  )
+SELECT
+  "url",
+  "name",
+  model,
+  manufacturer,
+  cost_in_credits,
+  "length",
+  max_atmosphering_speed,
+  crew,
+  passengers,
+  cargo_capacity,
+  consumables,
+  hyperdrive_rating,
+  "MGLT",
+  starship_class
+FROM
+  starships;
