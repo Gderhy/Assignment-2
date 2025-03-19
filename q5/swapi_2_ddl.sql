@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS normalized_vehicle_pilots;
 DROP TABLE IF EXISTS normalized_vehicles;
 DROP TABLE IF EXISTS normalized_films_startships;
 DROP TABLE IF EXISTS normalized_pilots;
@@ -109,4 +110,10 @@ CREATE TABLE normalized_vehicles(
   cargo_capacity TEXT,
   consumables TEXT,
   vehicle_class TEXT
-)
+);
+
+CREATE TABLE normalized_vehicle_pilots(
+  vehicle_id INT REFERENCES normalized_vehicles (vehicle_id) ON DELETE CASCADE,
+  person_id INT REFERENCES normalized_people (person_id) ON DELETE CASCADE,
+  PRIMARY KEY (vehicle_id, person_id)
+);

@@ -176,3 +176,14 @@ SELECT
   vehicle_class
 FROM
   vehicles;
+
+-- Migrate vehicle_pilots to normalized_pilots
+INSERT INTO
+  normalized_pilots (starship_id, person_id)
+SELECT
+  nv.vehicle_id,
+  npe.person_id
+FROM
+  vehicle_pilots vp
+  JOIN normalized_vehicles nv ON vp.vehicle_url = nv.url
+  JOIN normalized_people npe ON vp.people_url = npe.url;
