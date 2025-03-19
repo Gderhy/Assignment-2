@@ -29,9 +29,9 @@ const insertStarWarsData = async () => {
   fs.createReadStream(csvFilePath)
     .pipe(csv())
     .on("data", (row) => {
-      const movieId = parseInt(row.id, 10);
+      const movieId = `${row.id}`;
       const title = row.title;
-      const popularity = parseFloat(row.popularity);
+      const popularity = `${row.popularity}`;
       const movieKeywords = row.keywords ? row.keywords.split(", ") : [];
 
       movies.push([movieId, title, popularity]);
