@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
-import { getPool, disconnectDB } from '../db.js';
 
 
 const inputFilePath = path.join('q4', 'extracted', 'TMDB_movie_dataset_v11.csv');
