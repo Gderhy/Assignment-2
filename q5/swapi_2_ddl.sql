@@ -1,5 +1,5 @@
+DROP TABLE IF EXISTS normalized_pilots;
 DROP TABLE IF EXISTS normalized_starships;
-
 DROP TABLE IF EXISTS normalized_planet_films;
 
 DROP TABLE IF EXISTS normalized_films_people;
@@ -80,3 +80,9 @@ CREATE TABLE
     "MGLT" TEXT,
     starship_class TEXT
   );
+
+CREATE TABLE normalized_pilots(
+  starship_id INT REFERENCES normalized_starships (starship_id) ON DELETE CASCADE,
+  person_id INT REFERENCES normalized_people (person_id) ON DELETE CASCADE,
+  PRIMARY KEY (starship_id, person_id)
+);

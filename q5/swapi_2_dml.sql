@@ -122,3 +122,14 @@ SELECT
   starship_class
 FROM
   starships;
+
+-- Migrate pilots to normalized_pilots
+INSERT INTO
+  normalized_pilots (starship_id, person_id)
+SELECT
+  ns.starship_id,
+  npe.person_id
+FROM
+  pilots p
+  JOIN normalized_starships ns ON p.starship_url = ns.url
+  JOIN normalized_people npe ON p.people_url = npe.url;
