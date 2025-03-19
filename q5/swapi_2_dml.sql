@@ -187,3 +187,15 @@ FROM
   vehicle_pilots vp
   JOIN normalized_vehicles nv ON vp.vehicle_url = nv.url
   JOIN normalized_people npe ON vp.people_url = npe.url;
+
+
+-- Migrate film_vehicle to normalized_films_vehicles
+INSERT INTO
+  normalized_films_vehicles (film_id, vehicle_id)
+SELECT
+  sfd.film_id,
+  nv.vehicle_id
+  FROM
+    film_vehicle fv
+    JOIN swapi_films_details sfd ON fv.film_url = sfd.url
+    JOIN normalized_vehicles nv ON fv.vehicle_url = nv.url;

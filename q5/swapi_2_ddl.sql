@@ -117,3 +117,9 @@ CREATE TABLE normalized_vehicle_pilots(
   person_id INT REFERENCES normalized_people (person_id) ON DELETE CASCADE,
   PRIMARY KEY (vehicle_id, person_id)
 );
+
+CREATE TABLE normalized_films_vehicles(
+  film_id INT REFERENCES normalized_films (film_id) ON DELETE CASCADE,
+  vehicle_id INT REFERENCES normalized_vehicles (vehicle_id) ON DELETE CASCADE,
+  PRIMARY KEY (film_id, vehicle_id)
+)
