@@ -81,8 +81,12 @@ FROM
   planets;
 
 -- -- Linking the planets to the films in the normalized_films_planets table
--- INSERT INTO
---   normalized_films_planets (film_id, planet_id)
--- SELECT
+INSERT INTO normalized_films_planets (film_id, planet_id)
+SELECT 
+  sfd.film_id, 
+  np.planet_id
+FROM planet_films pf
+JOIN swapi_films_details sfd ON pf.film_url = sfd.url
+JOIN normalized_planets np ON pf.planet_url = np.url;
 
 
