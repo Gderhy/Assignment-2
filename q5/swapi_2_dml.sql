@@ -135,9 +135,9 @@ FROM
   JOIN normalized_starships ns ON p.starship_url = ns.url
   JOIN normalized_people npe ON p.people_url = npe.url;
 
--- Migrate film_starship to normalized_films_startships
+-- Migrate film_starship to normalized_films_starships
 INSERT INTO
-  normalized_films_startships (film_id, starship_id)
+  normalized_films_starships (film_id, starship_id)
 SELECT
   sfd.film_id,
   ns.starship_id
@@ -180,7 +180,7 @@ FROM
 
 -- Migrate vehicle_pilots to normalized_pilots
 INSERT INTO
-  normalized_pilots (starship_id, person_id)
+  normalized_vehicle_pilots (vehicle_id, person_id)
 SELECT
   nv.vehicle_id,
   npe.person_id
@@ -188,6 +188,7 @@ FROM
   vehicle_pilots vp
   JOIN normalized_vehicles nv ON vp.vehicle_url = nv.url
   JOIN normalized_people npe ON vp.people_url = npe.url;
+
 
 -- Migrate film_vehicle to normalized_films_vehicles
 INSERT INTO
@@ -213,11 +214,11 @@ INSERT INTO
     hair_colors,
     skin_colors,
     language,
-    homeworld_url
+    homeworld_id
   )
 SELECT
-  "url",
-  "name",
+  species.url,
+  species.name,
   classification,
   designation,
   average_height,
@@ -226,9 +227,11 @@ SELECT
   hair_colors,
   skin_colors,
   language,
-  homeworld_url
+  np.planet_id
 FROM
-  species;
+  species
+  JOIN normalized_planets np ON species.homeworld_url = np.url;
+
 
 -- Migrate film_species to normalized_films_species
 INSERT INTO

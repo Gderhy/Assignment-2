@@ -432,9 +432,10 @@ const insertSpecies = async (pool, speciesData) => {
     "average_lifespan",
     "language",
     "url",
+    "homeworld_url",
   ];
 
-  const query = pgp.helpers.insert(speciesData, columns, "species") + " RETURNING url;";
+  const query = pgp.helpers.insert(speciesData.map(specieData =>{return {...specieData, "homeworld_url": specieData.homeworld}}), columns, "species") + " RETURNING url;";
   try {
     const queryResult = await pool.query(query);
     console.log(`Inserted ${queryResult.rowCount} species.`);

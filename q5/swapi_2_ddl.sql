@@ -1,29 +1,19 @@
+-- Drop the most dependent tables (those with foreign keys to others)
 DROP TABLE IF EXISTS normalized_films_species;
-
 DROP TABLE IF EXISTS normalized_species_people;
-
-DROP TABLE IF EXISTS normalized_species;
-
 DROP TABLE IF EXISTS normalized_vehicle_pilots;
-
 DROP TABLE IF EXISTS normalized_films_vehicles;
-
-DROP TABLE IF EXISTS normalized_vehicles;
-
-DROP TABLE IF EXISTS normalized_films_startships;
-
+DROP TABLE IF EXISTS normalized_films_starships;
 DROP TABLE IF EXISTS normalized_pilots;
-
-DROP TABLE IF EXISTS normalized_starships;
-
+DROP TABLE IF EXISTS normalized_planet_people;
+DROP TABLE IF EXISTS normalized_films_people;
 DROP TABLE IF EXISTS normalized_planet_films;
 
-DROP TABLE IF EXISTS normalized_films_people;
-
-DROP TABLE IF EXISTS normalized_planet_people;
-
+-- Drop main entity tables after the dependent tables are gone
+DROP TABLE IF EXISTS normalized_species;
+DROP TABLE IF EXISTS normalized_vehicles;
+DROP TABLE IF EXISTS normalized_starships;
 DROP TABLE IF EXISTS normalized_people;
-
 DROP TABLE IF EXISTS normalized_planets;
 
 CREATE TABLE
@@ -105,7 +95,7 @@ CREATE TABLE
   );
 
 CREATE TABLE
-  normalized_films_startships (
+  normalized_films_starships (
     film_id INT REFERENCES normalized_films (film_id) ON DELETE CASCADE,
     starship_id INT REFERENCES normalized_starships (starship_id) ON DELETE CASCADE,
     PRIMARY KEY (film_id, starship_id)
@@ -154,9 +144,9 @@ CREATE TABLE
     hair_colors TEXT,
     eye_colors TEXT,
     average_lifespan TEXT,
-    homeworld_url TEXT,
+    homeworld_id INT,
     "language" TEXT,
-    FOREIGN KEY (homeworld_url) REFERENCES normalized_planets ("url") ON DELETE SET NULL
+    FOREIGN KEY (homeworld_id) REFERENCES normalized_planets (planet_id) ON DELETE SET NULL
   );
 
 CREATE TABLE 
