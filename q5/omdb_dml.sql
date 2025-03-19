@@ -8,7 +8,7 @@ FROM
   JOIN swapi_films_details as sfd ON fi.url = sfd.url;
 
 -- Insert the rating sources into the normalized_rating_sources table
-INSERT INTO nomalized_rating_sources (source)
+INSERT INTO normalized_rating_sources (source)
 SELECT DISTINCT
   source
 FROM
@@ -22,5 +22,5 @@ SELECT
   fr.value
 FROM
   film_ratings as fr
-  JOIN nomalized_rating_sources as nrs ON fr.source = nrs.source
+  JOIN normalized_rating_sources as nrs ON fr.source = nrs.source
   JOIN swapi_films_details as sfd ON fr.url = sfd.url;
