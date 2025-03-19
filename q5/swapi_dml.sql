@@ -51,42 +51,6 @@ WHERE
 -- and we need to split them into individual producers
 -- and link the producers to the films in the films_producers table
 
-
--- Inserting the swapi planets into the new db
-INSERT INTO
-  normalized_planets (
-    "url",
-    "name",
-    "rotation_period",
-    "orbital_period",
-    "diameter",
-    "climate",
-    "gravity",
-    "terrain",
-    "surface_water",
-    "population"
-  )
-SELECT
-  "url",
-  "name",
-  "rotation_period",
-  "orbital_period",
-  "diameter",
-  "climate",
-  "gravity",
-  "terrain",
-  "surface_water",
-  "population"
-FROM
-  planets;
-
--- -- Linking the planets to the films in the normalized_films_planets table
-INSERT INTO normalized_films_planets (film_id, planet_id)
-SELECT 
-  sfd.film_id, 
-  np.planet_id
-FROM planet_films pf
-JOIN swapi_films_details sfd ON pf.film_url = sfd.url
-JOIN normalized_planets np ON pf.planet_url = np.url;
+ 
 
 
