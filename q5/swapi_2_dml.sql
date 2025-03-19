@@ -140,10 +140,10 @@ INSERT INTO
 SELECT
   sfd.film_id,
   ns.starship_id
-  FROM
-    film_starship fs
-    JOIN swapi_films_details sfd ON fs.film_url = sfd.url
-    JOIN normalized_starships ns ON fs.starship_url = ns.url;
+FROM
+  film_starship fs
+  JOIN swapi_films_details sfd ON fs.film_url = sfd.url
+  JOIN normalized_starships ns ON fs.starship_url = ns.url;
 
 -- Migrate vehicles to normalized_vehicles
 INSERT INTO
@@ -188,14 +188,43 @@ FROM
   JOIN normalized_vehicles nv ON vp.vehicle_url = nv.url
   JOIN normalized_people npe ON vp.people_url = npe.url;
 
-
 -- Migrate film_vehicle to normalized_films_vehicles
 INSERT INTO
   normalized_films_vehicles (film_id, vehicle_id)
 SELECT
   sfd.film_id,
   nv.vehicle_id
-  FROM
-    film_vehicle fv
-    JOIN swapi_films_details sfd ON fv.film_url = sfd.url
-    JOIN normalized_vehicles nv ON fv.vehicle_url = nv.url;
+FROM
+  film_vehicle fv
+  JOIN swapi_films_details sfd ON fv.film_url = sfd.url
+  JOIN normalized_vehicles nv ON fv.vehicle_url = nv.url;
+
+-- Migrate species to normalized_species
+INSERT INTO
+  normalized_species (
+    "url",
+    "name",
+    classification,
+    designation,
+    average_height,
+    average_lifespan,
+    eye_colors,
+    hair_colors,
+    skin_colors,
+    language,
+    homeworld_url
+  )
+SELECT
+  "url",
+  "name",
+  classification,
+  designation,
+  average_height,
+  average_lifespan,
+  eye_colors,
+  hair_colors,
+  skin_colors,
+  language,
+  homeworld_url
+FROM
+  species;
