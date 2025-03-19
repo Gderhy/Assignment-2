@@ -56,7 +56,7 @@ const insertProducersAndLinkFilms = async () => {
     console.log("Fetching inserted producers and films for linking...");
     const filmMapResponse = await pool.query(`
       SELECT nf.film_id, f.url 
-      FROM nomalized_films nf
+      FROM normalized_films nf
       JOIN swapi_films_details sfd ON nf.film_id = sfd.film_id
       JOIN films f ON f.url = sfd.url;`);
     const filmMap = new Map(filmMapResponse.rows.map((row) => [row.url, row.film_id]));
