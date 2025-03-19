@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS normalized_species_films;
+DROP TABLE IF EXISTS normalized_films_species;
 
 DROP TABLE IF EXISTS normalized_species_people;
 
@@ -157,4 +157,11 @@ CREATE TABLE
     homeworld_url TEXT,
     "language" TEXT,
     FOREIGN KEY (homeworld_url) REFERENCES normalized_planets ("url") ON DELETE SET NULL
+  );
+
+CREATE TABLE 
+  normalized_films_species (
+    film_id INT REFERENCES normalized_films (film_id) ON DELETE CASCADE,
+    species_id INT REFERENCES normalized_species (species_id) ON DELETE CASCADE,
+    PRIMARY KEY (film_id, species_id)
   );

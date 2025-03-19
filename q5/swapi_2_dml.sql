@@ -228,3 +228,14 @@ SELECT
   homeworld_url
 FROM
   species;
+
+-- Migrate film_species to normalized_films_species
+INSERT INTO
+  normalized_films_species (film_id, species_id)
+SELECT
+  sfd.film_id,
+  nspecies.species_id
+  FROM
+    film_species fs
+    JOIN swapi_films_details sfd ON fs.film_url = sfd.url
+    JOIN normalized_species nspecies ON fs.species_url = nspecies.url;
