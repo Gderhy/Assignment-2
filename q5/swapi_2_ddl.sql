@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS normalized_vehicles;
 DROP TABLE IF EXISTS normalized_films_startships;
 DROP TABLE IF EXISTS normalized_pilots;
 DROP TABLE IF EXISTS normalized_starships;
@@ -93,3 +94,19 @@ CREATE TABLE normalized_films_startships(
   starship_id INT REFERENCES normalized_starships (starship_id) ON DELETE CASCADE,
   PRIMARY KEY (film_id, starship_id)
 );
+
+CREATE TABLE normalized_vehicles(
+  vehicle_id SERIAL PRIMARY KEY,
+  "url" TEXT UNIQUE,
+  "name" TEXT NOT NULL,
+  model TEXT,
+  manufacturer TEXT,
+  cost_in_credits TEXT,
+  "length" TEXT,
+  max_atmosphering_speed TEXT,
+  crew TEXT,
+  passengers TEXT,
+  cargo_capacity TEXT,
+  consumables TEXT,
+  vehicle_class TEXT
+)

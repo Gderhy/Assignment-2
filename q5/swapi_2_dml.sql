@@ -144,3 +144,35 @@ SELECT
     film_starship fs
     JOIN swapi_films_details sfd ON fs.film_url = sfd.url
     JOIN normalized_starships ns ON fs.starship_url = ns.url;
+
+-- Migrate vehicles to normalized_vehicles
+INSERT INTO
+  normalized_vehicles (
+    "url",
+    "name",
+    model,
+    manufacturer,
+    cost_in_credits,
+    "length",
+    max_atmosphering_speed,
+    crew,
+    passengers,
+    cargo_capacity,
+    consumables,
+    vehicle_class
+  )
+SELECT
+  "url",
+  "name",
+  model,
+  manufacturer,
+  cost_in_credits,
+  "length",
+  max_atmosphering_speed,
+  crew,
+  passengers,
+  cargo_capacity,
+  consumables,
+  vehicle_class
+FROM
+  vehicles;
