@@ -89,7 +89,7 @@ const populateTables = async () => {
   const pool = await getPool();
   try {
     console.log("Reading SQL script...");
-    const sqlScript = fs.readFileSync("q5/swapi_dml.sql", "utf-8");
+    const sqlScript = fs.readFileSync(dml_path, "utf-8");
     console.log("Executing SQL script...");
     await pool.query(sqlScript);
 
