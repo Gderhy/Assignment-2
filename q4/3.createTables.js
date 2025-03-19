@@ -1,5 +1,5 @@
 import fs from "fs";
-import {getPool, disconnectDB} from "../db.js";
+import { getPool, disconnectDB } from "../db.js";
 
 const ddlFilePath = "./q4/3.a.ddl.sql"; // Path to your DDL script
 
