@@ -128,8 +128,9 @@ const insertPeople = async (pool, peopleData) => {
     "birth_year",
     "gender",
     "url",
+    "homeworld_url",
   ];
-  const query = pgp.helpers.insert(peopleData, columns, "people") + " RETURNING url;";
+  const query = pgp.helpers.insert(peopleData.map(personData => {return {...personData, "homeworld_url": personData.homeworld}}), columns, "people") + " RETURNING url;";
 
   try {
     const queryResult = await pool.query(query);

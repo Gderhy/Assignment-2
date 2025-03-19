@@ -38,11 +38,11 @@ INSERT INTO
     eye_color,
     birth_year,
     gender,
-    homeworld_url
+    homeworld_id
   )
 SELECT
-  "url",
-  "name",
+  people.url,
+  people.name,
   height,
   mass,
   hair_color,
@@ -50,9 +50,10 @@ SELECT
   eye_color,
   birth_year,
   gender,
-  homeworld_url
+  np.planet_id
 FROM
-  people;
+  people
+  JOIN normalized_planets np ON people.homeworld_url = np.url;
 
 -- Migrate planet_people to normalized_planet_people
 INSERT INTO
@@ -235,7 +236,7 @@ INSERT INTO
 SELECT
   sfd.film_id,
   nspecies.species_id
-  FROM
-    film_species fs
-    JOIN swapi_films_details sfd ON fs.film_url = sfd.url
-    JOIN normalized_species nspecies ON fs.species_url = nspecies.url;
+FROM
+  film_species fs
+  JOIN swapi_films_details sfd ON fs.film_url = sfd.url
+  JOIN normalized_species nspecies ON fs.species_url = nspecies.url;

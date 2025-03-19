@@ -53,8 +53,8 @@ CREATE TABLE
     eye_color TEXT,
     birth_year TEXT,
     gender TEXT,
-    homeworld_url TEXT,
-    FOREIGN KEY (homeworld_url) REFERENCES planets ("url") ON DELETE SET NULL
+    homeworld_id INT,
+    FOREIGN KEY (homeworld_id) REFERENCES normalized_planets (planet_id) ON DELETE CASCADE
   );
 
 CREATE TABLE
