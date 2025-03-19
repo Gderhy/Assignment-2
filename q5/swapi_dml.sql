@@ -50,7 +50,3 @@ WHERE
 -- Will do this in js since the producers are in a comma separated string
 -- and we need to split them into individual producers
 -- and link the producers to the films in the films_producers table
-
- 
-
-
