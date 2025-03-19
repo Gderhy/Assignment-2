@@ -35,3 +35,22 @@ FROM
   JOIN tmdb_movie_ids tmi ON swk.movie_id = tmi.movie_id
   JOIN normalized_films nf ON tmi.film_id = nf.film_id
   JOIN normalized_keywords nk ON swk.keyword = nk.keyword;
+
+-- Insert the new source of rating into the table
+INSERT INTO
+  normalized_rating_sources (source)
+VALUES
+  ('tmdb') ON CONFLICT (source) DO NOTHING;
+
+--  insert the popularity data from star_wars_popularity into the normalized_film_ratings table
+INSERT INTO
+  normalized_film_ratings (film_id, rating_source_id, value)
+SELECT
+  nf.film_id,
+  nrs.rating_source_id,
+  swp.popularity
+FROM
+  star_wars_popularity swp
+  JOIN tmdb_movie_ids tmi ON swp.movie_id = tmi.movie_id
+  JOIN normalized_films nf ON tmi.film_id = nf.film_id
+  JOIN normalized_rating_sources nrs ON nrs.source = 'tmdb';
