@@ -76,3 +76,14 @@ FROM
   film_people fp
   JOIN swapi_films_details sfd ON fp.film_url = sfd.url
   JOIN normalized_people npe ON fp.people_url = npe.url;
+
+-- Migrate planet_films to normalized_planet_films
+INSERT INTO
+  normalized_planet_films (planet_id, film_id)
+SELECT
+  npf.planet_id,
+  sfd.film_id
+FROM
+  planet_films pf
+  JOIN normalized_planets npf ON pf.planet_url = npf.url
+  JOIN swapi_films_details sfd ON pf.film_url = sfd.url;
