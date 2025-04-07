@@ -42,7 +42,7 @@ WITH ranked_movies AS (
         nfr.value AS rating_value,
         RANK() OVER (PARTITION BY nrs.source ORDER BY nfr.value DESC) AS rank
     FROM normalized_film_ratings nfr
-    JOIN nomalized_rating_sources nrs ON nfr.rating_source_id = nrs.rating_source_id
+    JOIN normalized_rating_sources nrs ON nfr.rating_source_id = nrs.rating_source_id
     JOIN normalized_films nf ON nfr.film_id = nf.film_id
 )
 SELECT rating_provider, movie_title, rating_value
